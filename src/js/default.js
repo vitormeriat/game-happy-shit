@@ -31,8 +31,8 @@
 
     var forceResize = false;
 
-    var egg = new Egg();
-    var eggDefault = new Egg();
+    var shit = new Shit();
+    var shitDefault = new Shit();
 
     var currentScreen = 0;// 0 = Menu, 1 Gameplay, 3 Final Screen
 
@@ -63,24 +63,23 @@
         var tempImgRoof = new Image(),
         tempImgNestNormalFront = new Image(),
         tempImgNestNormalBack = new Image(),
-        tempImgEgg = new Image(),
+        tempImgShit = new Image(),
         tempTest = new Image(),
         tempMenuLogoImage = new Image(),
         tempTbPlay = new Image(),
         tempBtPlayImage = new Image(),
-        tempBrokenEggImage = new Image(),
+        tempBrokenShitImage = new Image(),
         tempHand = new Image();
 
-        
         var loader = new PxLoader(),
-        tempImgRoof = loader.addImage('images/fundobanheiro.png'), // tempImgRoof = loader.addImage('images/fundomata.jpg'),
+        tempImgRoof = loader.addImage('images/fundobanheiro.png'), 
         tempImgNestNormalFront = loader.addImage('images/bostanestFrontFull.png'),
-        tempImgNestNormalBack = loader.addImage('images/bostanestBackFull.png'), // tempImgEgg = loader.addImage('images/eggFull21.png'),
-        tempImgEgg = loader.addImage('images/heroibosta.png'),
+        tempImgNestNormalBack = loader.addImage('images/bostanestBackFull.png'), 
+        tempImgShit = loader.addImage('images/heroibosta.png'),
         tempMenuLogoImage = loader.addImage('images/logoFinal.png'),
         tempTbPlay = loader.addImage('images/btPlay.png'),
         tempBtPlayImage = loader.addImage('images/btPlayAgain.png'),
-        tempBrokenEggImage = loader.addImage('images/bostaperdedora.png'), //tempBrokenEggImage = loader.addImage('images/ovoQuebrado.png'), 
+        tempBrokenShitImage = loader.addImage('images/bostaperdedora.png'),  
         tempHand = loader.addImage('images/hand.png');
 
         loader.addCompletionListener(function () {
@@ -95,8 +94,8 @@
 
             tempImgNestNormalFront.width *= 0.7;
             tempImgNestNormalFront.height *= 0.7;
-            tempImgEgg.width *= 0.4;
-            tempImgEgg.height *= 0.4;
+            tempImgShit.width *= 0.4;
+            tempImgShit.height *= 0.4;
 
             _storeNest1.ImgNestFront = tempImgNestNormalFront;
             _storeNest1.ImgNestBack = tempImgNestNormalBack;
@@ -104,10 +103,10 @@
             menuScreen.menuLogoImage = tempMenuLogoImage;
             menuScreen.btPlayImage = tempTbPlay;
             gameOverScreen.btPlayAgainImage = tempBtPlayImage;
-            gameOverScreen.figEggDestroiedImage = tempBrokenEggImage;
+            gameOverScreen.figShitDestroiedImage = tempBrokenShitImage;
 
-            eggDefault.ImgEgg = tempImgEgg;
-            eggDefault.Size = new Size(eggDefault.ImgEgg.width, eggDefault.ImgEgg.height);
+            shitDefault.ImgShit = tempImgShit;
+            shitDefault.Size = new Size(shitDefault.ImgShit.width, shitDefault.ImgShit.height);
 
 
 
@@ -122,7 +121,7 @@
                 userPoints = app.sessionState.userPoints;
                 userPointsScreen = userPoints;
 
-                egg = new Egg();
+                shit = new Shit();
                 listLandingPlaces = new Array();
 
                 currentScreen = app.sessionState.currentScreen;
@@ -142,10 +141,10 @@
                         //continueGame(listLandingPlacesRescued[0].Place.Altitude, listLandingPlacesRescued[listLandingPlacesRescued.length - 1].Place.Altitude);
                         userHelp.NextTimeShow = currentGameTime + 5;
                         currentScreen = 1;
-                        var eggRescued = JSON.parse(app.sessionState.egg);
-                        egg.Altitude = eggRescued.Altitude;
-                        egg.Latitude = eggRescued.Latitude;
-                        egg.Rotation = eggRescued.Rotation;
+                        var shitRescued = JSON.parse(app.sessionState.shit);
+                        shit.Altitude = shitRescued.Altitude;
+                        shit.Latitude = shitRescued.Latitude;
+                        shit.Rotation = shitRescued.Rotation;
 
                         for (var i = 0; i < listLandingPlacesRescued.length; i++) {
                             listLandingPlaces[i] = new LandingPlace(1, listLandingPlacesRescued[i].Place.Altitude, listLandingPlacesRescued[i].Place.Latitude, 0, listLandingPlacesRescued[i].Place.LatitudeSpeed, listLandingPlacesRescued[i].Place.CurrentDirection);
@@ -153,16 +152,16 @@
                             listLandingPlaces[i].Place.ImgNestBack = _storeNest1.ImgNestBack;
 
                             var placeAltitude = Math.round(listLandingPlacesRescued[i].Place.Altitude + 1);
-                            var eggAltitude = Math.round(egg.Altitude);
+                            var shitAltitude = Math.round(shit.Altitude);
 
-                            if (placeAltitude == eggAltitude)
-                                egg.CurrentLandingPlace = listLandingPlaces[i];
+                            if (placeAltitude == shitAltitude)
+                                shit.CurrentLandingPlace = listLandingPlaces[i];
 
 
                         }
 
-                        egg.ImgEgg = eggDefault.ImgEgg;
-                        egg.Size = eggDefault.Size;
+                        shit.ImgShit = shitDefault.ImgShit;
+                        shit.Size = shitDefault.Size;
 
                         firstAltitude = app.sessionState.firstAltitude;
                         nextAltitude = listLandingPlacesRescued[listLandingPlacesRescued.length - 1].Place.Altitude;
@@ -170,7 +169,7 @@
                         menuScreen.showMenu = false;
 
 
-                        ChangeCameraPosition(egg.CurrentLandingPlace.Place.Altitude - 26, false);
+                        ChangeCameraPosition(shit.CurrentLandingPlace.Place.Altitude - 26, false);
 
 
                         break;
@@ -199,7 +198,7 @@
 
         canvas.addEventListener('mousedown', function (e) {
             if (currentScreen == 1) {
-                if (e.layerY > egg.CurrentLandingPlace.Place.Position.Y && e.layerY < egg.CurrentLandingPlace.Place.Position.Y + egg.CurrentLandingPlace.Place.Size.Height) {
+                if (e.layerY > shit.CurrentLandingPlace.Place.Position.Y && e.layerY < shit.CurrentLandingPlace.Place.Position.Y + shit.CurrentLandingPlace.Place.Size.Height) {
                     IsHolding = true;
                     IsHoldingStartAltitude = GetAltitudeByRealY(e.layerY);
                 }
@@ -210,7 +209,7 @@
             if (currentScreen == 1) {
                 if (IsHolding) {
                     IsHoldingCurrentAltitude = GetAltitudeByRealY(e.layerY);
-                    egg.CurrentLandingPlace.Place.Pull(IsHoldingStartAltitude, IsHoldingCurrentAltitude);
+                    shit.CurrentLandingPlace.Place.Pull(IsHoldingStartAltitude, IsHoldingCurrentAltitude);
                 }
             }
         }, false);
@@ -218,7 +217,7 @@
         canvas.addEventListener('mouseup', function (e) {
             if (currentScreen == 1) {
                 IsHolding = false;
-                egg.CurrentLandingPlace.Place.Release();
+                shit.CurrentLandingPlace.Place.Release();
             }
         }, false);
 
@@ -297,9 +296,9 @@
 
     function newGame() {
         listLandingPlaces = new Array();
-        egg = new Egg();
-        egg.ImgEgg = eggDefault.ImgEgg;
-        egg.Size = eggDefault.Size;
+        shit = new Shit();
+        shit.ImgShit = shitDefault.ImgShit;
+        shit.Size = shitDefault.Size;
 
         firstAltitude = CameraAltitudeReal + 20;
 
@@ -308,14 +307,14 @@
 
         ChangeCameraPosition(firstAltitude - 26, true);
 
-        egg.CurrentLandingPlace = listLandingPlaces[0]; // só para testes
+        shit.CurrentLandingPlace = listLandingPlaces[0]; // só para testes
     }
 
     function continueGame(_firstAltitude, _nextAltitude) {
         listLandingPlaces = new Array();
-        egg = new Egg();
-        egg.ImgEgg = eggDefault.ImgEgg;
-        egg.Size = eggDefault.Size;
+        shit = new Shit();
+        shit.ImgShit = shitDefault.ImgShit;
+        shit.Size = shitDefault.Size;
 
         firstAltitude = _firstAltitude + 20;
         nextAltitude = _nextAltitude;
@@ -324,7 +323,7 @@
 
         ChangeCameraPosition(firstAltitude - 26, true);
 
-        egg.CurrentLandingPlace = listLandingPlaces[0]; // só para testes
+        shit.CurrentLandingPlace = listLandingPlaces[0]; // só para testes
     }
 
     function update() {
@@ -381,7 +380,7 @@
 
                         case 1:// Gameplay
 
-                            egg.update();
+                            shit.update();
 
                             for (var i = 0; i < listLandingPlaces.length; i++) {
                                 if (listLandingPlaces[i].Place.Altitude < CameraAltitudeReal + 25) {
@@ -443,11 +442,11 @@
             for (var i = 0; i < listLandingPlaces.length; i++) {
                 listLandingPlaces[i].Place.draw(ctx, 0);
             }
-            egg.draw(ctx, 0);
+            shit.draw(ctx, 0);
             for (var i = 0; i < listLandingPlaces.length; i++) {
                 listLandingPlaces[i].Place.draw(ctx, 1);
             }
-            egg.draw(ctx, 1);
+            shit.draw(ctx, 1);
         }
 
         ctx.save();
@@ -704,8 +703,8 @@
                 }
             }
 
-            egg.Size.Height = GetResolutionHeight(egg.ImgEgg.height);
-            egg.Size.Width = GetResolutionWidth(egg.ImgEgg.width, egg.ImgEgg.height, egg.Size.Height);
+            shit.Size.Height = GetResolutionHeight(shit.ImgShit.height);
+            shit.Size.Width = GetResolutionWidth(shit.ImgShit.width, shit.ImgShit.height, shit.Size.Height);
 
             menuScreen.resize(canvas);
             gameOverScreen.resize(ctx);
@@ -778,9 +777,9 @@
         this.btPlayAgainPosition = new Vector2(0, 0);
         this.btPlayAgainSize = new Size(1, 1);
 
-        this.figEggDestroiedImage = new Image();
-        this.figEggDestroiedPosition = new Vector2();
-        this.figEggDestroiedSize = new Size();
+        this.figShitDestroiedImage = new Image();
+        this.figShitDestroiedPosition = new Vector2();
+        this.figShitDestroiedSize = new Size();
 
         this.points = 0;
         this.highestPoints = 0;
@@ -817,7 +816,7 @@
                 _ctx.fillText(this.highestPoints + " Points", label4.X, label4.Y);
 
                 _ctx.drawImage(this.btPlayAgainImage, this.btPlayAgainPosition.X, this.btPlayAgainPosition.Y, this.btPlayAgainSize.Width, this.btPlayAgainSize.Height);
-                _ctx.drawImage(this.figEggDestroiedImage, this.figEggDestroiedPosition.X, this.figEggDestroiedPosition.Y, this.figEggDestroiedSize.Width, this.figEggDestroiedSize.Height);
+                _ctx.drawImage(this.figShitDestroiedImage, this.figShitDestroiedPosition.X, this.figShitDestroiedPosition.Y, this.figShitDestroiedSize.Width, this.figShitDestroiedSize.Height);
 
                 _ctx.restore();
             }
@@ -864,10 +863,10 @@
             this.btPlayAgainPosition.X = (document.documentElement.offsetWidth / 2) - (this.btPlayAgainSize.Width / 2);
             this.btPlayAgainPosition.Y = document.documentElement.offsetHeight * 0.35;
 
-            this.figEggDestroiedSize.Height = GetResolutionHeight(this.figEggDestroiedImage.height);
-            this.figEggDestroiedSize.Width = GetResolutionWidth(this.figEggDestroiedImage.width, this.figEggDestroiedImage.height, this.figEggDestroiedSize.Height);
-            this.figEggDestroiedPosition.X = (document.documentElement.offsetWidth / 2) - (this.figEggDestroiedSize.Width / 2);
-            this.figEggDestroiedPosition.Y = document.documentElement.offsetHeight * 0.55;
+            this.figShitDestroiedSize.Height = GetResolutionHeight(this.figShitDestroiedImage.height);
+            this.figShitDestroiedSize.Width = GetResolutionWidth(this.figShitDestroiedImage.width, this.figShitDestroiedImage.height, this.figShitDestroiedSize.Height);
+            this.figShitDestroiedPosition.X = (document.documentElement.offsetWidth / 2) - (this.figShitDestroiedSize.Width / 2);
+            this.figShitDestroiedPosition.Y = document.documentElement.offsetHeight * 0.55;
 
             _ctx.restore();
         }
@@ -883,7 +882,7 @@
     }
 
     /****************************** Objetos ********************************/
-    function Egg() {
+    function Shit() {
         var forceAltitude = 0;
         var forceLatitude = 0;
         var currentOrder; // Ordem de draw na tela
@@ -898,7 +897,7 @@
         var lastAltitude;
 
 
-        this.ImgEgg = new Image();
+        this.ImgShit = new Image();
         this.Altitude;
         this.Latitude = 0;
         this.CurrentLandingPlace = null;
@@ -984,7 +983,7 @@
                     }
                 }
 
-                // codigo que espera o ovo de afastar do ovo, para aplicar o efeito de profundidade do nest/egg
+                // codigo que espera o ovo de afastar do ovo, para aplicar o efeito de profundidade do nest/Shit
                 if ((this.Altitude - this.CurrentLandingPlace.Place.Altitude) > 5 || forceAltitude < 1) {
                     currentOrder = 1;
                 } else {
@@ -1069,12 +1068,12 @@
         this.draw = function (_ctx, _order) {
             if (currentOrder == _order && this.CurrentLandingPlace != null) {
 
-                var _eggHalfWidth = this.Size.Width / 2;
-                var _eggHalfHeight = this.Size.Height / 2;
+                var _shitHalfWidth = this.Size.Width / 2;
+                var _shitHalfHeight = this.Size.Height / 2;
                 _ctx.save();;
-                _ctx.translate(this.Position.X + _eggHalfWidth, this.Position.Y + _eggHalfHeight);
+                _ctx.translate(this.Position.X + _shitHalfWidth, this.Position.Y + _shitHalfHeight);
                 _ctx.rotate(this.Rotation);
-                _ctx.drawImage(this.ImgEgg, -_eggHalfWidth, -_eggHalfHeight, this.Size.Width, this.Size.Height);
+                _ctx.drawImage(this.ImgShit, -_shitHalfWidth, -_shitHalfHeight, this.Size.Width, this.Size.Height);
                 _ctx.restore();
 
             }
@@ -1154,12 +1153,12 @@
         }
         this.Release = function () {
             isHolding = false;
-            if (egg.CurrentLandingPlace.Place == this) {
+            if (shit.CurrentLandingPlace.Place == this) {
                 if (plusAltitude < -5)
                     plusAltitude = -5;
 
                 if (plusAltitude < -1) {
-                    egg.Jump(plusAltitude * -30); //egg.Jump((plusAltitude -1) * 8.5);
+                    shit.Jump(plusAltitude * -30); //shit.Jump((plusAltitude -1) * 8.5);
                 }
             }
         }
@@ -1385,7 +1384,7 @@
                 _ctx.save();
                 _ctx.globalAlpha = opacity;
 
-                _ctx.drawImage(this.ImgHand, egg.CurrentLandingPlace.Place.Position.X + (size.Width * 0.6), egg.CurrentLandingPlace.Place.Position.Y + (GetResolutionHeight(currentAltitudeSlide)), size.Width, size.Height);
+                _ctx.drawImage(this.ImgHand, shit.CurrentLandingPlace.Place.Position.X + (size.Width * 0.6), shit.CurrentLandingPlace.Place.Position.Y + (GetResolutionHeight(currentAltitudeSlide)), size.Width, size.Height);
                 _ctx.restore();
             }
 
