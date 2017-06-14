@@ -3,18 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <title>App1</title>
-
-    <!-- WinJS references -->
-    <!-- To get the latest version of WinJS, go to: http://go.microsoft.com/fwlink/?LinkId=533245 -->
     <link href="WinJS/css/ui-dark.css" rel="stylesheet" />
-    <!-- <script src="WinJS/js/WinJS.js"></script> -->
 
     <script src="js/PxLoader.js" type="text/javascript"></script>
     <script src="js/PxLoaderImage.js" type="text/javascript"></script>
 
-    <!-- App1 references -->
     <link href="css/default.css" rel="stylesheet" />
-    <!-- <script src="js/default.js"></script> -->
 </head>
 <body>
     <canvas id="canvasGame">
@@ -22,7 +16,7 @@
     </canvas>
 
    <script>
-   
+
     var w8_Mode = 1;
     var canvas;// = document.getElementById('canvasGame');
     var ctx; // = canvas.getContext('2d');
@@ -32,9 +26,12 @@
 
     var deepControl = new DeepControl();
 
-    var CameraAltitudeReal = 0; // A altitude real da camera fica na verdade bem no topo do jogo... OBS.: Use o ChangePositon para mudar a posição
-    var CameraAltitudeVirtual = 0; // ... por isso a necessidade do virtual que fica no chão. OBS.: Use o ChangePositon para mudar a posição
-    var newCameraAltitude = 0; // OBS.: Use o ChangePositon para mudar a posição
+    // A altitude real da camera fica na verdade bem no topo do jogo... OBS.: Use o ChangePositon para mudar a posição
+    var CameraAltitudeReal = 0;
+    // ... por isso a necessidade do virtual que fica no chão. OBS.: Use o ChangePositon para mudar a posição
+    var CameraAltitudeVirtual = 0;
+    // OBS.: Use o ChangePositon para mudar a posição
+    var newCameraAltitude = 0;
     var CameraSpecialPosition = new Vector2(0, 0);
     var isCameraAnimating = 0;
     var firstAltitude = 0;
@@ -46,19 +43,19 @@
     var IsHolding = false;
     var IsHoldingStartAltitude = 0;
     var IsHoldingCurrentAltitude = 0;
-
-    var nextAltitude = 31; // altitude do primeiro nest
+    // altitude do primeiro nest
+    var nextAltitude = 31;
 
     var listLandingPlaces = new Array();
-
-    var _storeNest1 = new Nest(0, 0); // Nest que vai guardar algumas imagens e propriedades padrões
+    // Nest que vai guardar algumas imagens e propriedades padrões
+    var _storeNest1 = new Nest(0, 0);
 
     var forceResize = false;
 
     var egg = new Egg();
     var eggDefault = new Egg();
-
-    var currentScreen = 0;// 0 = Menu, 1 Gameplay, 3 Final Screen
+    // 0 = Menu, 1 Gameplay, 3 Final Screen
+    var currentScreen = 0;
 
     var menuScreen = new MenuScreen();
     var gameOverScreen = new GameoverScreen();
@@ -68,10 +65,11 @@
     var isPausedOpacity = 0;
 
     var userPoints = 0;
-    var userPointsScreen = 0; // Valor que é mostrado na tela
+    // Valor que é mostrado na tela
+    var userPointsScreen = 0;
     var isSnnaped = false;
-
-    var fromSuspend = false; // se entrar no estado durmant...
+    // se entrar no estado durmant...
+    var fromSuspend = false;
 
     var soundBump = new Audio("sounds/bump.wav");
     var nestLanding = new Audio("sounds/land.wav");
@@ -95,7 +93,7 @@
         tempBrokenEggImage = new Image(),
         tempHand = new Image();
 
-        
+
         var loader = new PxLoader(),
         tempImgRoof = loader.addImage('images/fundobanheiro.png'), // tempImgRoof = loader.addImage('images/fundomata.jpg'),
         tempImgNestNormalFront = loader.addImage('images/bostanestFrontFull.png'),
@@ -104,7 +102,7 @@
         tempMenuLogoImage = loader.addImage('images/logoFinal.png'),
         tempTbPlay = loader.addImage('images/btPlay.png'),
         tempBtPlayImage = loader.addImage('images/btPlayAgain.png'),
-        tempBrokenEggImage = loader.addImage('images/bostaperdedora.png'), //tempBrokenEggImage = loader.addImage('images/ovoQuebrado.png'), 
+        tempBrokenEggImage = loader.addImage('images/bostaperdedora.png'), //tempBrokenEggImage = loader.addImage('images/ovoQuebrado.png'),
         tempHand = loader.addImage('images/hand.png');
 
         loader.addCompletionListener(function () {
@@ -132,8 +130,6 @@
 
             eggDefault.ImgEgg = tempImgEgg;
             eggDefault.Size = new Size(eggDefault.ImgEgg.width, eggDefault.ImgEgg.height);
-
-
 
             // deixe por ultimo
             forceResize = true;
@@ -181,8 +177,6 @@
 
                             if (placeAltitude == eggAltitude)
                                 egg.CurrentLandingPlace = listLandingPlaces[i];
-
-
                         }
 
                         egg.ImgEgg = eggDefault.ImgEgg;
@@ -193,9 +187,7 @@
 
                         menuScreen.showMenu = false;
 
-
                         ChangeCameraPosition(egg.CurrentLandingPlace.Place.Altitude - 26, false);
-
 
                         break;
                     case 2: // lost screen
@@ -215,10 +207,7 @@
 
                         break;
                 }
-
-
             }
-
         });
 
         canvas.addEventListener('mousedown', function (e) {
@@ -247,8 +236,6 @@
         }, false);
 
         canvas.addEventListener('click', function (e) {
-
-
             if (isPaused && !isSnnaped) {
                 isPaused = false;
             } else if (menuScreen.showMenu) {
@@ -262,18 +249,13 @@
                 gameOverScreen.hide();
                 currentScreen = 1;
             }
-
-
-
         }, false);
-
-
 
         document.onkeyup = function (e) {
             if (e.keyCode == 32) { // espaço
-                
+
             } else if (e.keyCode == 13) {
-                
+
             }
         };
 
@@ -443,12 +425,12 @@
                 //Deixar sempre no final
                 draw();
             }
-            
+
         }
 
         setTimeout(update, 1000 / fpsStandard);
     }
-    
+
     function draw() {
 
         ctx.fillStyle = "#a2c9ea";
@@ -864,7 +846,7 @@
             label3.Y = gameDashboardSize.Height * 0.2;
 
             _ctx.font = gameDashboardSize.Height * 0.05 + "px Segoe UI";
-            //  
+            //
             label2.X = gameDashboardPosition.X + (gameDashboardSize.Width * 0.15);
             label2.Y = gameDashboardSize.Height * 0.270;
             //Seus pontos
@@ -1058,9 +1040,9 @@
                         recordScore = 0;
                     }
                     else {
-                        recordScore = parseInt(recordScore);                    
+                        recordScore = parseInt(recordScore);
                     }
-					
+
 					if (isNaN(recordScore)) {
                         recordScore += 0;
                     }
