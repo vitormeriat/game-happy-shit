@@ -108,8 +108,6 @@
             shitDefault.ImgShit = tempImgShit;
             shitDefault.Size = new Size(shitDefault.ImgShit.width, shitDefault.ImgShit.height);
 
-
-
             // deixe por ultimo
             forceResize = true;
 
@@ -156,8 +154,6 @@
 
                             if (placeAltitude == shitAltitude)
                                 shit.CurrentLandingPlace = listLandingPlaces[i];
-
-
                         }
 
                         shit.ImgShit = shitDefault.ImgShit;
@@ -168,9 +164,7 @@
 
                         menuScreen.showMenu = false;
 
-
                         ChangeCameraPosition(shit.CurrentLandingPlace.Place.Altitude - 26, false);
-
 
                         break;
                     case 2: // lost screen
@@ -190,10 +184,7 @@
 
                         break;
                 }
-
-
             }
-
         });
 
         canvas.addEventListener('mousedown', function (e) {
@@ -222,8 +213,6 @@
         }, false);
 
         canvas.addEventListener('click', function (e) {
-
-
             if (isPaused && !isSnnaped) {
                 isPaused = false;
             } else if (menuScreen.showMenu) {
@@ -237,12 +226,7 @@
                 gameOverScreen.hide();
                 currentScreen = 1;
             }
-
-
-
         }, false);
-
-
 
         document.onkeyup = function (e) {
             if (e.keyCode == 32) { // espaço
@@ -269,28 +253,11 @@
             } else {
                 attemptFPS = 0;
             }
-
-
         }, 500);
 
         update();//StartFPS();
 
-
-        //currentAppBar.addEventListener("beforehide", function (eventHandles) { isPaused = false; });
-        //currentAppBar.addEventListener("beforeshow", function (eventHandles) { if (currentScreen == 1) { isPaused = true; } });
-
-        //cmdMenu.addEventListener("click", function () {
-        //    //ChangeCameraPosition(CameraAltitudeVirtual - 130, true);
-        //    menuScreen.showMenu = true;
-        //    isPaused = false;
-        //    currentScreen = 0;
-        //    gameOverScreen.hide();
-        //}, false);
-
-
     }
-
-
 
     var triggerBugFPS = false;
 
@@ -358,7 +325,6 @@
                         GenerateNests(nextAltitude, false);
                     }
 
-
                     if (newCameraAltitude != CameraAltitudeReal) {
                         var distance = newCameraAltitude - CameraAltitudeReal;
                         distance *= 0.04;
@@ -418,7 +384,6 @@
                 //Deixar sempre no final
                 draw();
             }
-            
         }
 
         setTimeout(update, 1000 / fpsStandard);
@@ -431,13 +396,7 @@
         ctx.fillRect(0, 0, document.documentElement.offsetWidth, document.documentElement.offsetHeight);
 
         deepControl.draw(ctx);
-        /*
-        ctx.save();
-        ctx.globalAlpha = 0.1;
-        ctx.fillStyle = "black";
-        ctx.fillRect(gameDashboardPosition.X, gameDashboardPosition.Y, gameDashboardSize.Width, gameDashboardSize.Height);
-        ctx.restore();
-        */
+        
         if (currentScreen == 1) {
             for (var i = 0; i < listLandingPlaces.length; i++) {
                 listLandingPlaces[i].Place.draw(ctx, 0);
@@ -467,7 +426,6 @@
 
             ctx.restore();
 
-
             ctx.save();
 
             if (menuScreen.showMenuOpacity > 0) {
@@ -485,8 +443,6 @@
             ctx.fillText("Points: " + Math.round(userPointsScreen), gameDashboardPosition.X, gameDashboardSize.Height * 0.04);
             ctx.restore();
         }
-
-
 
         menuScreen.draw(ctx);
         gameOverScreen.draw(ctx);
@@ -506,19 +462,11 @@
 
             pauseText = new Vector2((document.documentElement.offsetWidth / 2) - (ctx.measureText("Paused").width / 2), document.documentElement.offsetHeight * 0.55);
 
-
             ctx.fillText("Paused", pauseText.X, pauseText.Y);
             ctx.restore();
         }
 
         userHelp.draw(ctx);
-
-        // Deixe sempre embaixo o seguinte código de draw
-        /*
-        ctx.fillStyle = "black";
-        ctx.font = "30px Segoe UI";
-        ctx.fillText(fpsValue, 10, document.documentElement.offsetHeight);
-        */
     }
 
     function GenerateNests(_staringAltitude, _firstGen) {
@@ -572,22 +520,15 @@
                     newNestAltitude += nextAltitude;
 
                     altitudeNotReady = false;
-
-
                 }
-
-
-
             }
 
             if (i == 0 && _firstGen) {
                 newNestAltitude = _staringAltitude;
                 _firstGen = false;
-
             }
 
             if (_staringAltitude == 0 && i == 0) {
-
                 //newNestSpeed = 5;
             }
 
@@ -642,7 +583,6 @@
         /// <summary>Função feita para mudar a posição da camera. Algo de nota é que a camera por padrao é posicionada no meio da tela.</summary>
         /// <param name="_newAltitude" type="Number">Nova altura que vai ficar a altitude.</param>
         /// <param name="_newAltitude" type="Bool">Se deve ter animação ou não.</param>
-
 
         if (animation)
             newCameraAltitude = _newAltitude + 100; // Por ficar no meio da tela, vem do +50.
@@ -768,7 +708,6 @@
 
                 _ctx.restore();
             }
-
         }
     }
 
